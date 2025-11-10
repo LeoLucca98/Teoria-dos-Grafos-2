@@ -20,8 +20,32 @@ Este repositório já contém a implementação funcional em Python das etapas p
 - Python 3.10+ (recomendado)
 - Bibliotecas Python:
   - `matplotlib` (para visualização)
-
+  
 Você pode instalar manualmente ou usar `pip` diretamente (ver seção de Execução).
+
+### Arquivo `requirements.txt`
+
+O arquivo `requirements.txt` (na raiz do repositório) centraliza as dependências necessárias para executar o projeto. Atualmente contém:
+
+```
+matplotlib
+```
+
+Para instalar tudo de uma vez:
+
+Windows (PowerShell):
+
+```powershell
+pip install -r requirements.txt
+```
+
+Linux/macOS (bash):
+
+```bash
+pip install -r requirements.txt
+```
+
+Se forem adicionadas novas bibliotecas ao código-fonte, lembre-se de atualizar esse arquivo para manter o ambiente reprodutível.
 
 ## Estrutura do repositório
 
