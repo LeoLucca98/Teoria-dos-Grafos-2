@@ -261,13 +261,31 @@ python -m src.main -m data/map_autoral_prof.txt -o data   # variantes
 
 ## Resultados e Prints (Relatório)
 
-Para avaliação, inclua capturas de tela do programa rodando, por exemplo:
+Imagens geradas automaticamente (via `python -m src.main -m data/map_autoral_prof.txt -o docs`) já incluídas em `docs/`:
 
-- `docs/mapa_grafo.png` – mapa com grafo de visibilidade
-- `docs/mst.png` – MST destacada
-- `docs/caminho.png` – caminho na árvore entre start e goal
+| Tipo | Arquivo | Descrição |
+|------|---------|-----------|
+| Mapa + Grafo + MST + Caminho (default) | `docs/map_autoral_prof__default.png` | Visão geral completa com caminho anotado. |
+| Destaque MST | `docs/map_autoral_prof__mst-highlight.png` | MST destacada, grafo esmaecido, caminho visível. |
+| Apenas MST | `docs/map_autoral_prof__mst-only.png` | Mostra somente as arestas da árvore geradora mínima. |
+| Destaque Caminho | `docs/map_autoral_prof__path-highlight.png` | Caminho em foco, MST e grafo com pouca opacidade. |
+| Apenas Grafo de Visibilidade | `docs/map_autoral_prof__vis-only.png` | Todas as arestas de visibilidade e vértices. |
 
-Sugestão: ao abrir a janela do Matplotlib, salve manualmente a figura (ícone de disquete) e coloque as imagens na pasta `docs/`.
+Imagem ilustrativa do mapa (arquivo de imagem exigido pelo enunciado): `data/map_autoral_prof.svg`.
+
+Para gerar novamente as imagens em outra pasta (ex.: `out/`):
+
+```bash
+python -m src.main -m data/map_autoral_prof.txt -o out
+```
+
+Para abrir a versão interativa (gera também `data/map_autoral_prof__run.png`):
+
+```bash
+python -m src.main -m data/map_autoral_prof.txt
+```
+
+Se quiser capturar uma tela manual adicional, abra a janela interativa e use o ícone de salvar do Matplotlib.
 
 ## Troubleshooting / Notas Técnicas
 
