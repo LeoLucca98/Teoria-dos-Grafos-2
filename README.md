@@ -1,8 +1,8 @@
-# Navegação com Grafo de Visibilidade e Árvore (Prim)
+# Navegação com Grafo de Visibilidade, MST (Prim) e Caminho
 
-Projeto da disciplina para explorar árvores em um cenário de navegação de robô, seguindo o enunciado: leitura de mapa (texto/imagem), grafo de visibilidade, MST (Prim), vértice mais próximo visível, busca em árvore e plot do caminho.
+Projeto da disciplina para explorar estruturas de grafos em navegação: leitura de mapa (texto/imagem), construção de grafo de visibilidade, geração de árvore geradora mínima (Prim), conexão de pontos externos ao grafo (vértice visível mais próximo), busca de caminho na MST e visualizações com múltiplos esquemas de cores.
 
-Este repositório já contém a implementação funcional em Python das etapas principais; abaixo estão as instruções de uso, o formato do mapa e como reproduzir os resultados no Windows (PowerShell).
+Este README descreve todo o processo: clonagem, configuração do ambiente, execução interativa e geração de variantes de visualização, além do formato dos dados.
 
 ## Visão geral das etapas (mapeadas ao código)
 
@@ -15,13 +15,13 @@ Este repositório já contém a implementação funcional em Python das etapas p
 - Busca na árvore (caminho s→t): `src/search.py`.
 - Plot do mapa, grafo e caminho: `src/plot.py` e fluxo em `src/main.py`.
 
-## Requisitos
+## Requisitos e Instalação
 
 - Python 3.10+ (recomendado)
 - Bibliotecas Python:
   - `matplotlib` (para visualização)
   
-Você pode instalar manualmente ou usar `pip` diretamente (ver seção de Execução).
+Você pode instalar manualmente ou usar `pip` diretamente (ver seção de Execução). Recomenda-se ambiente virtual para isolar dependências.
 
 ### Arquivo `requirements.txt`
 
@@ -31,21 +31,57 @@ O arquivo `requirements.txt` (na raiz do repositório) centraliza as dependênci
 matplotlib
 ```
 
-Para instalar tudo de uma vez:
+### Passo a passo desde a clonagem
 
-Windows (PowerShell):
+1. Clonar o repositório:
 
-```powershell
-pip install -r requirements.txt
-```
+	PowerShell:
+	```powershell
+	git clone https://github.com/LeoLucca98/Teoria-dos-Grafos-2.git
+	cd Teoria-dos-Grafos-2
+	```
 
-Linux/macOS (bash):
+	Bash (Linux/macOS/Git Bash):
+	```bash
+	git clone https://github.com/LeoLucca98/Teoria-dos-Grafos-2.git
+	cd Teoria-dos-Grafos-2
+	```
 
-```bash
-pip install -r requirements.txt
-```
+2. Criar ambiente virtual (opcional, mas recomendado):
 
-Se forem adicionadas novas bibliotecas ao código-fonte, lembre-se de atualizar esse arquivo para manter o ambiente reprodutível.
+	PowerShell:
+	```powershell
+	python -m venv .venv
+	.\.venv\Scripts\Activate.ps1
+	```
+
+	Bash:
+	```bash
+	python -m venv .venv
+	source .venv/bin/activate
+	```
+
+3. Instalar dependências:
+
+	PowerShell:
+	```powershell
+	pip install -r requirements.txt
+	```
+
+	Bash:
+	```bash
+	pip install -r requirements.txt
+	```
+
+4. Verificar instalação:
+	```bash
+	python - <<'PY'
+import matplotlib
+print('matplotlib OK, versão:', matplotlib.__version__)
+PY
+	```
+
+Se forem adicionadas novas bibliotecas, atualize `requirements.txt` e repita o passo de instalação.
 
 ## Estrutura do repositório
 
@@ -110,7 +146,7 @@ Observações importantes do modelo geométrico adotado:
 - Segmentos que tocam exatamente nas quinas dos obstáculos são permitidos (apenas interseções “próprias” bloqueiam visibilidade).
 - O caminho final é obtido na árvore geradora mínima (MST) do grafo de visibilidade, não no grafo completo.
 
-## Como executar (Windows PowerShell)
+## Execução Interativa (abre janela)
 
 1) (Opcional, mas recomendado) criar e ativar um ambiente virtual:
 
@@ -127,11 +163,20 @@ pip install matplotlib
 
 3) Executar o programa apontando para um arquivo de mapa:
 
+PowerShell:
 ```powershell
 python -m src.main -m data\map_autoral_prof.txt
 ```
 
-O script abrirá uma janela com:
+Bash:
+```bash
+python -m src.main -m data/map_autoral_prof.txt
+```
+
+Ao rodar:
+
+- Abre uma janela Matplotlib com obstáculos, grafo de visibilidade, MST, pernas (start/goal → vértices mais próximos) e caminho na MST numerado.
+- Salva automaticamente uma imagem com cores vívidas em `data/map_autoral_prof__run.png`.
 
 - Polígonos dos obstáculos
 - Grafo de visibilidade entre quinas
@@ -139,7 +184,55 @@ O script abrirá uma janela com:
 - Segmentos conectando posição inicial/final aos vértices mais próximos visíveis
 - Caminho na árvore entre os vértices encontrados (com anotações de índice)
 
-Para testar outros pontos iniciais/finais, edite as duas primeiras linhas do arquivo de mapa.
+Para testar outros pontos iniciais/finais, edite as duas primeiras linhas do arquivo de mapa e reexecute.
+
+### Geração de Variantes (sem abrir janela)
+
+Use `--save-variants` (ou `-o`) para salvar automaticamente várias imagens estilizadas. Exemplo salvando direto em `data/`:
+
+PowerShell:
+```powershell
+python -m src.main -m data\map_autoral_prof.txt -o data
+```
+
+Bash:
+```bash
+python -m src.main -m data/map_autoral_prof.txt -o data
+```
+
+Arquivos gerados (exemplos):
+- `data/map_autoral_prof__default.png`
+- `data/map_autoral_prof__mst-highlight.png`
+- `data/map_autoral_prof__path-highlight.png`
+- `data/map_autoral_prof__vis-only.png`
+- `data/map_autoral_prof__mst-only.png`
+- (Interativo) `data/map_autoral_prof__run.png`
+
+Personalização: edite a lista `variants` em `src/main.py` (função `save_variants`) para mudar cores, alphas, espessuras e ativar/desativar partes (grafo, MST, caminho, pernas).
+
+### Comandos resumidos
+
+PowerShell:
+```powershell
+git clone https://github.com/LeoLucca98/Teoria-dos-Grafos-2.git
+cd Teoria-dos-Grafos-2
+python -m venv .venv
+\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m src.main -m data\map_autoral_prof.txt           # interativo + salva run
+python -m src.main -m data\map_autoral_prof.txt -o data    # variantes
+```
+
+Bash:
+```bash
+git clone https://github.com/LeoLucca98/Teoria-dos-Grafos-2.git
+cd Teoria-dos-Grafos-2
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m src.main -m data/map_autoral_prof.txt           # interativo + salva run
+python -m src.main -m data/map_autoral_prof.txt -o data   # variantes
+```
 
 ## O que cada etapa faz
 
@@ -166,7 +259,7 @@ Para testar outros pontos iniciais/finais, edite as duas primeiras linhas do arq
 - [x] 6) Plot do caminho no mapa (janela interativa)
 - [x] 7) Instruções e organização do README (este arquivo)
 
-## Resultados e prints (o que anexar no relatório)
+## Resultados e Prints (Relatório)
 
 Para avaliação, inclua capturas de tela do programa rodando, por exemplo:
 
@@ -176,9 +269,10 @@ Para avaliação, inclua capturas de tela do programa rodando, por exemplo:
 
 Sugestão: ao abrir a janela do Matplotlib, salve manualmente a figura (ícone de disquete) e coloque as imagens na pasta `docs/`.
 
-## Notas técnicas e limitações
+## Troubleshooting / Notas Técnicas
 
-- A checagem de interseção usa interseção “própria”; tocar quinas é permitido, cruzar arestas bloqueia.
-- O caminho é restrito à MST (pode não ser o caminho mais curto do grafo completo, é o caminho na árvore geradora construída por Prim).
-- O arquivo de mapa atual já possui 3 obstáculos, como exigido.
-
+1. Em alguns ambientes Windows (Git Bash) pode ser necessário: `py -m pip install -r requirements.txt` ou `py -m src.main ...` se `python` não estiver no PATH.
+2. A checagem de interseção usa interseção “própria”; tocar quinas é permitido, cruzar arestas bloqueia.
+3. O caminho exibido está na MST (não garante o menor caminho do grafo completo).
+4. O arquivo de mapa atual já possui 3 obstáculos conforme enunciado; edite para testar outros cenários.
+5. Imagem gerada automaticamente na execução interativa: `data/<map>__run.png`.
