@@ -2,6 +2,8 @@
 
 Projeto da disciplina para explorar estruturas de grafos em navegação: leitura de mapa (texto/imagem), construção de grafo de visibilidade, geração de árvore geradora mínima (Prim), conexão de pontos externos ao grafo (vértice visível mais próximo), busca de caminho na MST e visualizações com múltiplos esquemas de cores.
 
+Grupo: Leonardo Lucca Holanda de Paula, Robson de Paula Correia dos Santos e Victória Jullya Cabral da Silva
+
 Este README descreve todo o processo: clonagem, configuração do ambiente, execução interativa e geração de variantes de visualização, além do formato dos dados.
 
 ## Visão geral das etapas (mapeadas ao código)
